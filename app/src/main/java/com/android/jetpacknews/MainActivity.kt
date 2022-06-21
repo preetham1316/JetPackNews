@@ -7,25 +7,39 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.android.jetpacknews.feature.home.presentation.viewmodel.HomeScreenViewModel
 import com.android.jetpacknews.feature.home.ui.HomeScreen
+import com.android.jetpacknews.feature.splash.presentation.viewmodel.SplashViewModel
+import com.android.jetpacknews.feature.splash.ui.SplashScreen
 import com.android.jetpacknews.navigation.Screen
+import com.android.jetpacknews.navigation.ScreenNavigator
+import com.android.jetpacknews.navigation.ScreenRouter
 import com.android.jetpacknews.ui.theme.JetPackNewsTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var screenNavigator: ScreenNavigator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val splashScreen = installSplashScreen()
+        // Keep the splash screen visible for this Activity
+        splashScreen.setKeepOnScreenCondition { false }
+        actionBar?.hide()
         setContent {
             JetPackNewsNavGraph()
         }
@@ -39,19 +53,29 @@ class MainActivity : ComponentActivity() {
             // A surface container using the 'background' color from the theme
             Scaffold(
                 content = {
-                    NavHost(
-                        navController = navController,
-                        startDestination = Screen.HomeScreen.route
-                    ) {
-                        composable(Screen.HomeScreen.route) {
-                            val viewModel = hiltViewModel<HomeScreenViewModel>()
-                            HomeScreen(viewModel = viewModel)
-                        }
-                    }
+                    PrimaryNavigator(navController)
                 },
                 backgroundColor = MaterialTheme.colors.background,
                 modifier = Modifier.fillMaxSize()
             )
+        }
+    }
+
+    @Composable
+    private fun PrimaryNavigator(navController: NavHostController) {
+        ScreenRouter(navController, screenNavigator)
+        NavHost(
+            navController = navController,
+            startDestination = Screen.Splash().route
+        ) {
+            composable(Screen.Splash().route) {
+                val viewModel = hiltViewModel<SplashViewModel>()
+                SplashScreen(viewModel)
+            }
+            composable(Screen.Home().route) {
+                val viewModel = hiltViewModel<HomeScreenViewModel>()
+                HomeScreen(viewModel = viewModel)
+            }
         }
     }
 }

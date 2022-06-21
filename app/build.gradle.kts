@@ -80,10 +80,11 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-compose:${Versions.COIL}")
+    implementation("androidx.core:core-splashscreen:${Versions.SPLASH_API_12V}")
 
-    implementation("androidx.navigation:navigation-compose:2.5.0-rc01")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-rc01")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-rc01")
+    implementation("androidx.navigation:navigation-compose:2.5.0-rc02")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-rc02")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-rc02")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
