@@ -13,4 +13,6 @@ object Versions {
 
     const val COIL = "2.1.0"
 
+    const val SPLASH_API_12V = "1.0.0-beta01"
+
 }

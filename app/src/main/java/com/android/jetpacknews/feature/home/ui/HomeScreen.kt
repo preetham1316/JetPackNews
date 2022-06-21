@@ -27,6 +27,7 @@ import coil.request.ImageRequest
 import com.android.jetpacknews.R
 import com.android.jetpacknews.domain.model.Article
 import com.android.jetpacknews.feature.home.presentation.viewmodel.HomeScreenViewModel
+import com.android.jetpacknews.ui.theme.JetPackNewsTheme
 
 @Composable
 fun HomeScreen(viewModel: HomeScreenViewModel) {
@@ -149,7 +150,7 @@ private fun AppBar() {
             ) {
                 Text(
                     text = "Jet Pack News",
-                    color = Color.Black,
+                    color = JetPackNewsTheme.colors.purple500,
                     textAlign = TextAlign.Center,
                     style = typography.h6
                 )

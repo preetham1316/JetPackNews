@@ -16,8 +16,7 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val getArticlesUseCase: GetArticlesUseCase
-) :
-    BaseViewModel<HomeScreenState, HomeScreenUiEvent>() {
+) : BaseViewModel<HomeScreenState, HomeScreenUiEvent>() {
     override val state: StateFlow<HomeScreenState>
         get() = reducer.state
 
