@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 class JetPackNewsColors(
     purple200: Color,
     purple500: Color,
+    purple600: Color,
     purple700: Color,
     teal200: Color,
 ) {
@@ -16,6 +17,8 @@ class JetPackNewsColors(
     var purple200 by mutableStateOf(purple200)
         private set
     var purple500 by mutableStateOf(purple500)
+        private set
+    var purple600 by mutableStateOf(purple600)
         private set
     var purple700 by mutableStateOf(purple700)
         private set
@@ -25,23 +28,27 @@ class JetPackNewsColors(
     fun copy(
         purple200: Color = this.purple200,
         purple500: Color = this.purple500,
+        purple600: Color = this.purple600,
         purple700: Color = this.purple700,
         teal200: Color = this.teal200
     ): JetPackNewsColors = JetPackNewsColors(
         purple200,
         purple500,
+        purple600,
         purple700,
-        teal200,
+        teal200
     )
 
     fun colorsSet(
         purple200: Color = Purple200,
         purple500: Color = Purple500,
+        purple600: Color = Purple600,
         purple700: Color = Purple700,
         teal200: Color = Teal200
     ): JetPackNewsColors = JetPackNewsColors(
         purple200,
         purple500,
+        purple600,
         purple700,
         teal200,
     )
@@ -52,17 +59,20 @@ val LocalColors = staticCompositionLocalOf { colorsSet() }
 fun colorsSet(
     purple200: Color = Purple200,
     purple500: Color = Purple500,
+    purple600: Color = Purple600,
     purple700: Color = Purple700,
     teal200: Color = Teal200
 ): JetPackNewsColors = JetPackNewsColors(
     purple200,
     purple500,
+    purple600,
     purple700,
-    teal200,
+    teal200
 )
 
 
 val Purple200 = Color(0xFFBB86FC)
 val Purple500 = Color(0xFF6200EE)
+val Purple600 = Color(0xFF400298)
 val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)

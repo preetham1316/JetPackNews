@@ -82,6 +82,9 @@ dependencies {
     implementation("io.coil-kt:coil-compose:${Versions.COIL}")
     implementation("androidx.core:core-splashscreen:${Versions.SPLASH_API_12V}")
 
+    // Pager
+    implementation("com.google.accompanist:accompanist-pager:${Versions.PAGER}")
+
     implementation("androidx.navigation:navigation-compose:2.5.0-rc02")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-rc02")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-rc02")

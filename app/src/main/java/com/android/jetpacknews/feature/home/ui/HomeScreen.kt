@@ -1,135 +1,69 @@
 package com.android.jetpacknews.feature.home.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.android.jetpacknews.R
-import com.android.jetpacknews.domain.model.Article
-import com.android.jetpacknews.feature.home.presentation.viewmodel.HomeScreenViewModel
 import com.android.jetpacknews.ui.theme.JetPackNewsTheme
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
-fun HomeScreen(viewModel: HomeScreenViewModel) {
-    val state by viewModel.state.collectAsState()
-
+fun HomeScreen() {
+    val tabData = listOf("Technology", "Movies", "Food", "Politics", "Education")
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+    )
+    val tabIndex = pagerState.currentPage
+    val coroutineScope = rememberCoroutineScope()
     Column {
         AppBar()
-        when {
-            state.isLoading -> FullScreenProgressBar()
-            state.articleList.isNotEmpty() -> ArticleList(state.articleList)
-
-        }
-    }
-}
-
-@Composable
-fun ArticleList(articleList: List<Article>) {
-    Box {
-        LazyColumn(content = {
-            items(articleList) { item ->
-                ArticleItem(item)
-            }
-        })
-
-    }
-}
-
-@Composable
-fun ArticleItem(item: Article) {
-    Card(
-        modifier = Modifier
-            .padding(start = 8.dp, top = 8.dp, end = 8.dp)
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .clickable {// T0D0 handle click
-            },
-        shape = shapes.medium,
-        elevation = 6.dp
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = Color.White)
-                .wrapContentHeight()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            RemoteImage(item.urlToImage)
-            Column(
-                modifier = Modifier
-                    .padding(top = 4.dp, start = 8.dp)
-                    .alignByBaseline()
-                    .fillMaxWidth()
+        Column {
+            ScrollableTabRow(
+                modifier = Modifier.fillMaxWidth(),
+                selectedTabIndex = tabIndex,
+                edgePadding = 0.dp,
             ) {
-                Text(
-                    text = item.title,
-                    color = Color.Black,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Start,
-                    style = typography.button
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = item.content,
-                    color = Color.Black,
-                    maxLines = 4,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Start,
-                    style = typography.caption
-                )
+                tabData.forEachIndexed { index, value ->
+                    Tab(
+                        modifier = Modifier.wrapContentSize(),
+                        selected = tabIndex == index,
+                        selectedContentColor = JetPackNewsTheme.colors.purple600,
+                        unselectedContentColor = JetPackNewsTheme.colors.purple500,
+                        onClick = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        },
+                        text = {
+                            Text(text = value, color = Color.White, maxLines = 1)
+                        })
+                }
             }
-        }
-    }
-}
-
-@Composable
-private fun RemoteImage(imageUrl: String) {
-    BoxWithConstraints {
-        AsyncImage(
-            modifier = Modifier
-                .size(104.dp)
-                .clip(RoundedCornerShape(32.dp)),
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(imageUrl)
-                .build(),
-            placeholder = painterResource(R.drawable.ic_image_placeholder),
-            contentDescription = "Image",
-            contentScale = ContentScale.FillBounds
-        )
-    }
-}
-
-@Composable
-private fun FullScreenProgressBar() {
-    Surface(color = Color.LightGray) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
+            HorizontalPager(
+                count = tabData.size,
+                state = pagerState,
+                modifier = Modifier.weight(1f),
+            ) { index ->
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    TabScreen(tabData[index])
+                }
+            }
         }
     }
 }
@@ -140,17 +74,18 @@ private fun AppBar() {
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp),
-        backgroundColor = Color.White,
+        backgroundColor = JetPackNewsTheme.colors.purple500,
         elevation = 8.dp,
         content = {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
                     text = "Jet Pack News",
-                    color = JetPackNewsTheme.colors.purple500,
+                    color = Color.White,
                     textAlign = TextAlign.Center,
                     style = typography.h6
                 )
