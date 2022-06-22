@@ -5,5 +5,7 @@ Also used latest libraries i.e
 2) Coil for image rendering
 3) Coroutines
 4) Navigation
+5) Pager
 
-<img width="369" alt="jet_pack_news_home_page" src="https://user-images.githubusercontent.com/107846675/174576181-27620d01-f675-40f9-b1e2-adaa9a99d27a.png">
+<img width="332" alt="jetPack_news_app" src="https://user-images.githubusercontent.com/107846675/175053031-068e759c-a63f-4986-9e9b-da227fe15bdf.png">
+
