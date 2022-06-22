@@ -7,6 +7,7 @@ import javax.annotation.concurrent.Immutable
 @Immutable
 data class HomeScreenState(
     val isLoading: Boolean = false,
+    val query: String = "",
     val articleList: List<Article> = emptyList()
 ) : UiState {
 

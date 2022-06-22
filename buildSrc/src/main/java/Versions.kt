@@ -15,4 +15,6 @@ object Versions {
 
     const val SPLASH_API_12V = "1.0.0-beta01"
 
+    const val PAGER = "0.23.1"
+
 }

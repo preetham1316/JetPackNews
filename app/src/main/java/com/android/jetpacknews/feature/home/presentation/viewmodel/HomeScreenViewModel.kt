@@ -25,12 +25,16 @@ class HomeScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch(dispatcherProvider.main) {
             sendEvent(HomeScreenUiEvent.ShowLoadingProgress)
-            fetchArticles()
+            fetchArticles(state.value.query)
         }
     }
 
     private fun sendEvent(event: HomeScreenUiEvent) {
         reducer.sendEvent(event)
+    }
+
+    fun updateQuery(query: String) {
+        reducer.sendEvent(HomeScreenUiEvent.UpdateQuery(query = query))
     }
 
     private inner class HomeScreenReducer(initialState: HomeScreenState) :
@@ -44,13 +48,14 @@ class HomeScreenViewModel @Inject constructor(
                         articleList = event.items
                     )
                 )
+                is HomeScreenUiEvent.UpdateQuery -> setState(oldState.copy(query = event.query))
             }
         }
     }
 
-    private fun fetchArticles() {
+    private fun fetchArticles(query: String) {
         viewModelScope.launch(dispatcherProvider.main) {
-            getArticlesUseCase.invoke("Apple").fold(onSuccess = {
+            getArticlesUseCase.invoke(query).fold(onSuccess = {
                 sendEvent(HomeScreenUiEvent.ShowData(items = it.articles))
             }, onFailure = {
                 // T0D0 handle error event

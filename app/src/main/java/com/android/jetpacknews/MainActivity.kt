@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -17,7 +17,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.android.jetpacknews.feature.home.presentation.viewmodel.HomeScreenViewModel
 import com.android.jetpacknews.feature.home.ui.HomeScreen
 import com.android.jetpacknews.feature.splash.presentation.viewmodel.SplashViewModel
 import com.android.jetpacknews.feature.splash.ui.SplashScreen
@@ -69,12 +68,10 @@ class MainActivity : ComponentActivity() {
             startDestination = Screen.Splash().route
         ) {
             composable(Screen.Splash().route) {
-                val viewModel = hiltViewModel<SplashViewModel>()
-                SplashScreen(viewModel)
+                SplashScreen(hiltViewModel())
             }
             composable(Screen.Home().route) {
-                val viewModel = hiltViewModel<HomeScreenViewModel>()
-                HomeScreen(viewModel = viewModel)
+                HomeScreen()
             }
         }
     }

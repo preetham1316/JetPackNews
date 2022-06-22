@@ -34,14 +34,7 @@ fun SplashScreen(hiltViewModel: SplashViewModel) {
             verticalArrangement = Arrangement.Center
         ) {
             Image(painter = painterResource(R.drawable.app_logo), contentDescription = "")
-            Spacer(modifier = Modifier.height(6.dp))
-            Text(
-                text = "Jet Pack News",
-                color = Color.White,
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.h6
-            )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             if (state.isLoading) {
                 CircularProgressIndicator(color = Color.White)
             }
