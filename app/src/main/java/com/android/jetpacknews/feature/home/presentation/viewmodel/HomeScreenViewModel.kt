@@ -22,7 +22,7 @@ class HomeScreenViewModel @Inject constructor(
 
     private val reducer = HomeScreenReducer(HomeScreenState.emptyState())
 
-    init {
+    fun loadData() {
         viewModelScope.launch(dispatcherProvider.main) {
             sendEvent(HomeScreenUiEvent.ShowLoadingProgress)
             fetchArticles(state.value.query)

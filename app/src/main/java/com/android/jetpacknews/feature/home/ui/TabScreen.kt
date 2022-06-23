@@ -20,7 +20,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.android.jetpacknews.R
@@ -28,9 +27,7 @@ import com.android.jetpacknews.domain.model.Article
 import com.android.jetpacknews.feature.home.presentation.viewmodel.HomeScreenViewModel
 
 @Composable
-fun TabScreen(tabQuery: String) {
-    val viewModel: HomeScreenViewModel = hiltViewModel()
-    viewModel.updateQuery(tabQuery)
+fun TabScreen(viewModel: HomeScreenViewModel) {
     val state by viewModel.state.collectAsState()
     Column {
         when {
