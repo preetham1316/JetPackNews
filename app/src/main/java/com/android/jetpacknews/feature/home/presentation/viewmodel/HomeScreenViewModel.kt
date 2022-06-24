@@ -28,10 +28,13 @@ class HomeScreenViewModel @Inject constructor(
 
     private val reducer = HomeScreenReducer(HomeScreenState.emptyState())
 
-    fun loadData() {
-        viewModelScope.launch(dispatcherProvider.main) {
-            sendEvent(HomeScreenUiEvent.ShowLoadingProgress)
-            fetchArticles(state.value.query)
+    fun loadData(query: String) {
+        if (query != state.value.query) {  // Fix to avoid reloading page when coming back from second screen
+            viewModelScope.launch(dispatcherProvider.main) {
+                updateQuery(query)
+                sendEvent(HomeScreenUiEvent.ShowLoadingProgress)
+                fetchArticles(state.value.query)
+            }
         }
     }
 
@@ -39,7 +42,7 @@ class HomeScreenViewModel @Inject constructor(
         reducer.sendEvent(event)
     }
 
-    fun updateQuery(query: String) {
+    private fun updateQuery(query: String) {
         reducer.sendEvent(HomeScreenUiEvent.UpdateQuery(query = query))
     }
 
