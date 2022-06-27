@@ -2,7 +2,6 @@ package com.android.jetpacknews.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme.shapes
-import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -13,7 +12,8 @@ private val DarkColorPalette = darkColors(
     primary = Purple500,
     secondary = Purple600,
     text = Color.White,
-    progressBackground = Color.Black
+    progressBackground = Color.Black,
+    cardBackground = GreyBlack
 )
 
 private val LightColorPalette = lightColors(
@@ -21,7 +21,8 @@ private val LightColorPalette = lightColors(
     primary = Purple500,
     secondary = Purple600,
     text = Color.Black,
-    progressBackground = Color.White
+    progressBackground = Color.White,
+    cardBackground = CreamWhite
 )
 
 object JetPackNewsTheme {
@@ -31,16 +32,25 @@ object JetPackNewsTheme {
         @ReadOnlyComposable
         get() = LocalColors.current
 
+    val typography: JetPackNewsTypography
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalTypography.current
+
+    val shapes: JetPackNewsShapes
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalShapes.current
 }
 
 @Composable
-fun JetPackNewsTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
-
+fun JetPackNewsTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    typography: JetPackNewsTypography = JetPackNewsTheme.typography,
+    shapes: JetPackNewsShapes = JetPackNewsTheme.shapes,
+    content: @Composable () -> Unit
+) {
+    val colors = if (darkTheme) DarkColorPalette else LightColorPalette
     CompositionLocalProvider(
         LocalColors provides colors,
         LocalShapes provides shapes,

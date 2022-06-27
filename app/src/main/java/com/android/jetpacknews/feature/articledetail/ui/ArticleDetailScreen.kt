@@ -61,7 +61,7 @@ fun DetailScreenBody(viewModel: ArticleDetailViewModel) {
                         text = "Author: ${state.author}",
                         color = JetPackNewsTheme.colors.text,
                         textAlign = TextAlign.Start,
-                        style = MaterialTheme.typography.body2
+                        style = JetPackNewsTheme.typography.title2
                     )
                 }
                 Text(
@@ -69,7 +69,7 @@ fun DetailScreenBody(viewModel: ArticleDetailViewModel) {
                     text = state.publishedAt.parseDate(),
                     color = JetPackNewsTheme.colors.text,
                     textAlign = TextAlign.End,
-                    style = MaterialTheme.typography.body2
+                    style = JetPackNewsTheme.typography.title2
                 )
             }
             Spacer(modifier = Modifier.height(20.dp))
@@ -78,14 +78,14 @@ fun DetailScreenBody(viewModel: ArticleDetailViewModel) {
             text = state.title,
             color = JetPackNewsTheme.colors.text,
             textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.h6
+            style = JetPackNewsTheme.typography.title3
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
             text = state.description,
             color = JetPackNewsTheme.colors.text,
             textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.body2
+            style = JetPackNewsTheme.typography.title2
         )
     }
 }

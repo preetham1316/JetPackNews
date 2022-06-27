@@ -12,6 +12,7 @@ class JetPackNewsColors(
     secondary: Color,
     text: Color,
     progressBackground: Color,
+    cardBackground: Color
 ) {
 
     var background by mutableStateOf(background)
@@ -24,19 +25,23 @@ class JetPackNewsColors(
         private set
     var progressBackground by mutableStateOf(progressBackground)
         private set
+    var cardBackground by mutableStateOf(cardBackground)
+        private set
 
     fun copy(
         background: Color = this.background,
         primary: Color = this.primary,
         secondary: Color = this.secondary,
         text: Color = this.text,
-        progressBackground: Color = this.progressBackground
+        progressBackground: Color = this.progressBackground,
+        cardBackground: Color = this.cardBackground
     ): JetPackNewsColors = JetPackNewsColors(
         background,
         primary,
         secondary,
         text,
-        progressBackground
+        progressBackground,
+        cardBackground
     )
 }
 
@@ -47,13 +52,15 @@ fun lightColors(
     primary: Color = Color(0xFF6200EE),
     secondary: Color = Color(0xFF400298),
     text: Color = Color.Black,
-    progressBackground: Color = Color.White
+    progressBackground: Color = Color.White,
+    cardBackground: Color = Color.White
 ): JetPackNewsColors = JetPackNewsColors(
     background,
     primary,
     secondary,
     text,
-    progressBackground
+    progressBackground,
+    cardBackground
 )
 
 fun darkColors(
@@ -61,15 +68,19 @@ fun darkColors(
     primary: Color = Color(0xFF6200EE),
     secondary: Color = Color(0xFF400298),
     text: Color = Color.White,
-    progressBackground: Color = Color.Black
+    progressBackground: Color = Color.Black,
+    cardBackground: Color = Color.Black
 ): JetPackNewsColors = JetPackNewsColors(
     background,
     primary,
     secondary,
     text,
-    progressBackground
+    progressBackground,
+    cardBackground
 )
 
 val Purple500 = Color(0xFF6200EE)
 val Purple600 = Color(0xFF400298)
+val CreamWhite = Color(0xFFF0EDF3)
+val GreyBlack = Color(0xFF1B1A1A)
 

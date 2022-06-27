@@ -65,13 +65,13 @@ fun ArticleItem(item: Article, onArticleClick: (Article) -> Unit) {
             .clickable {
                 onArticleClick.invoke(item)
             },
-        shape = MaterialTheme.shapes.medium,
+        shape = JetPackNewsTheme.shapes.medium,
         elevation = 6.dp
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = JetPackNewsTheme.colors.background)
+                .background(color = JetPackNewsTheme.colors.cardBackground)
                 .wrapContentHeight()
                 .padding(8.dp),
             horizontalArrangement = Arrangement.Start,
@@ -90,7 +90,7 @@ fun ArticleItem(item: Article, onArticleClick: (Article) -> Unit) {
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.button
+                    style = JetPackNewsTheme.typography.title
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
@@ -99,7 +99,7 @@ fun ArticleItem(item: Article, onArticleClick: (Article) -> Unit) {
                     maxLines = 4,
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.caption
+                    style = JetPackNewsTheme.typography.subTitle
                 )
             }
         }
@@ -112,7 +112,7 @@ private fun RemoteImage(imageUrl: String) {
         AsyncImage(
             modifier = Modifier
                 .size(104.dp)
-                .clip(RoundedCornerShape(32.dp)),
+                .clip(JetPackNewsTheme.shapes.iconShape),
             model = ImageRequest.Builder(LocalContext.current)
                 .data(imageUrl)
                 .build(),
