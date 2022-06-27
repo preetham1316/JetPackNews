@@ -2,6 +2,7 @@ package com.android.jetpacknews.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.dp
 
 val Shapes = Shapes(
@@ -9,3 +10,5 @@ val Shapes = Shapes(
     medium = RoundedCornerShape(size = 8.dp),
     large = RoundedCornerShape(0.dp)
 )
+
+internal val LocalShapes = staticCompositionLocalOf { Shapes() }

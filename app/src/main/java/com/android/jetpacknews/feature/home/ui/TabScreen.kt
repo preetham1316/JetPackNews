@@ -25,6 +25,8 @@ import coil.request.ImageRequest
 import com.android.jetpacknews.R
 import com.android.jetpacknews.domain.model.Article
 import com.android.jetpacknews.feature.home.presentation.viewmodel.HomeScreenViewModel
+import com.android.jetpacknews.ui.theme.JetPackNewsColors
+import com.android.jetpacknews.ui.theme.JetPackNewsTheme
 
 @Composable
 fun TabScreen(viewModel: HomeScreenViewModel) {
@@ -69,7 +71,7 @@ fun ArticleItem(item: Article, onArticleClick: (Article) -> Unit) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Color.White)
+                .background(color = JetPackNewsTheme.colors.background)
                 .wrapContentHeight()
                 .padding(8.dp),
             horizontalArrangement = Arrangement.Start,
@@ -84,7 +86,7 @@ fun ArticleItem(item: Article, onArticleClick: (Article) -> Unit) {
             ) {
                 Text(
                     text = item.title,
-                    color = Color.Black,
+                    color = JetPackNewsTheme.colors.text,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Start,
@@ -93,7 +95,7 @@ fun ArticleItem(item: Article, onArticleClick: (Article) -> Unit) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = item.description,
-                    color = Color.Black,
+                    color = JetPackNewsTheme.colors.text,
                     maxLines = 4,
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Start,
@@ -123,7 +125,7 @@ private fun RemoteImage(imageUrl: String) {
 
 @Composable
 private fun FullScreenProgressBar() {
-    Surface(color = Color.LightGray) {
+    Surface(color = JetPackNewsTheme.colors.progressBackground) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center

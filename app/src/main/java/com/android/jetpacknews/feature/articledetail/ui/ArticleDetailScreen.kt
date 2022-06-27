@@ -1,5 +1,6 @@
 package com.android.jetpacknews.feature.articledetail.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,11 +20,12 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.android.jetpacknews.R
 import com.android.jetpacknews.feature.articledetail.presentation.viewmodel.ArticleDetailViewModel
+import com.android.jetpacknews.ui.theme.JetPackNewsTheme
 import com.android.jetpacknews.util.parseDate
 
 @Composable
 fun ArticleDetailScreen(viewModel: ArticleDetailViewModel) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(JetPackNewsTheme.colors.background)) {
         AppBar {
             viewModel.onBackClicked()
         }
@@ -57,7 +59,7 @@ fun DetailScreenBody(viewModel: ArticleDetailViewModel) {
                 if (state.author.isNotEmpty()) {
                     Text(
                         text = "Author: ${state.author}",
-                        color = Color.Black,
+                        color = JetPackNewsTheme.colors.text,
                         textAlign = TextAlign.Start,
                         style = MaterialTheme.typography.body2
                     )
@@ -65,7 +67,7 @@ fun DetailScreenBody(viewModel: ArticleDetailViewModel) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = state.publishedAt.parseDate(),
-                    color = Color.Black,
+                    color = JetPackNewsTheme.colors.text,
                     textAlign = TextAlign.End,
                     style = MaterialTheme.typography.body2
                 )
@@ -74,14 +76,14 @@ fun DetailScreenBody(viewModel: ArticleDetailViewModel) {
         }
         Text(
             text = state.title,
-            color = Color.Black,
+            color = JetPackNewsTheme.colors.text,
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.h6
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
             text = state.description,
-            color = Color.Black,
+            color = JetPackNewsTheme.colors.text,
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.body2
         )
