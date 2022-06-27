@@ -7,72 +7,80 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 class JetPackNewsColors(
-    purple200: Color,
-    purple500: Color,
-    purple600: Color,
-    purple700: Color,
-    teal200: Color,
+    background: Color,
+    primary: Color,
+    secondary: Color,
+    text: Color,
+    progressBackground: Color,
+    cardBackground: Color
 ) {
 
-    var purple200 by mutableStateOf(purple200)
+    var background by mutableStateOf(background)
         private set
-    var purple500 by mutableStateOf(purple500)
+    var primary by mutableStateOf(primary)
         private set
-    var purple600 by mutableStateOf(purple600)
+    var secondary by mutableStateOf(secondary)
         private set
-    var purple700 by mutableStateOf(purple700)
+    var text by mutableStateOf(text)
         private set
-    var teal200 by mutableStateOf(teal200)
+    var progressBackground by mutableStateOf(progressBackground)
+        private set
+    var cardBackground by mutableStateOf(cardBackground)
         private set
 
     fun copy(
-        purple200: Color = this.purple200,
-        purple500: Color = this.purple500,
-        purple600: Color = this.purple600,
-        purple700: Color = this.purple700,
-        teal200: Color = this.teal200
+        background: Color = this.background,
+        primary: Color = this.primary,
+        secondary: Color = this.secondary,
+        text: Color = this.text,
+        progressBackground: Color = this.progressBackground,
+        cardBackground: Color = this.cardBackground
     ): JetPackNewsColors = JetPackNewsColors(
-        purple200,
-        purple500,
-        purple600,
-        purple700,
-        teal200
-    )
-
-    fun colorsSet(
-        purple200: Color = Purple200,
-        purple500: Color = Purple500,
-        purple600: Color = Purple600,
-        purple700: Color = Purple700,
-        teal200: Color = Teal200
-    ): JetPackNewsColors = JetPackNewsColors(
-        purple200,
-        purple500,
-        purple600,
-        purple700,
-        teal200,
+        background,
+        primary,
+        secondary,
+        text,
+        progressBackground,
+        cardBackground
     )
 }
 
-val LocalColors = staticCompositionLocalOf { colorsSet() }
+val LocalColors = staticCompositionLocalOf { lightColors() }
 
-fun colorsSet(
-    purple200: Color = Purple200,
-    purple500: Color = Purple500,
-    purple600: Color = Purple600,
-    purple700: Color = Purple700,
-    teal200: Color = Teal200
+fun lightColors(
+    background: Color = Color.White,
+    primary: Color = Color(0xFF6200EE),
+    secondary: Color = Color(0xFF400298),
+    text: Color = Color.Black,
+    progressBackground: Color = Color.White,
+    cardBackground: Color = Color.White
 ): JetPackNewsColors = JetPackNewsColors(
-    purple200,
-    purple500,
-    purple600,
-    purple700,
-    teal200
+    background,
+    primary,
+    secondary,
+    text,
+    progressBackground,
+    cardBackground
 )
 
+fun darkColors(
+    background: Color = Color.Black,
+    primary: Color = Color(0xFF6200EE),
+    secondary: Color = Color(0xFF400298),
+    text: Color = Color.White,
+    progressBackground: Color = Color.Black,
+    cardBackground: Color = Color.Black
+): JetPackNewsColors = JetPackNewsColors(
+    background,
+    primary,
+    secondary,
+    text,
+    progressBackground,
+    cardBackground
+)
 
-val Purple200 = Color(0xFFBB86FC)
 val Purple500 = Color(0xFF6200EE)
 val Purple600 = Color(0xFF400298)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val CreamWhite = Color(0xFFF0EDF3)
+val GreyBlack = Color(0xFF1B1A1A)
+

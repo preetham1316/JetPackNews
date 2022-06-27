@@ -1,5 +1,6 @@
 package com.android.jetpacknews.feature.home.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.ScrollableTabRow
@@ -44,8 +45,8 @@ fun HomeScreen() {
                     Tab(
                         modifier = Modifier.wrapContentSize(),
                         selected = tabIndex == index,
-                        selectedContentColor = JetPackNewsTheme.colors.purple600,
-                        unselectedContentColor = JetPackNewsTheme.colors.purple500,
+                        selectedContentColor = JetPackNewsTheme.colors.primary,
+                        unselectedContentColor = JetPackNewsTheme.colors.secondary,
                         onClick = {
                             coroutineScope.launch {
                                 pagerState.animateScrollToPage(index)
@@ -69,7 +70,9 @@ fun HomeScreen() {
                     }
                 }
                 Column(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(JetPackNewsTheme.colors.background),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -86,7 +89,7 @@ private fun AppBar() {
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp),
-        backgroundColor = JetPackNewsTheme.colors.purple500,
+        backgroundColor = JetPackNewsTheme.colors.primary,
         elevation = 8.dp,
         content = {
             Row(

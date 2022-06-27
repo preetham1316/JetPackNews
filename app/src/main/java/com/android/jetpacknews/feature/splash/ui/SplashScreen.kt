@@ -25,7 +25,7 @@ fun SplashScreen(hiltViewModel: SplashViewModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = JetPackNewsTheme.colors.purple500),
+            .background(color = JetPackNewsTheme.colors.primary),
         contentAlignment = Alignment.Center
     ) {
         Column(

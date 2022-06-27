@@ -25,6 +25,8 @@ import coil.request.ImageRequest
 import com.android.jetpacknews.R
 import com.android.jetpacknews.domain.model.Article
 import com.android.jetpacknews.feature.home.presentation.viewmodel.HomeScreenViewModel
+import com.android.jetpacknews.ui.theme.JetPackNewsColors
+import com.android.jetpacknews.ui.theme.JetPackNewsTheme
 
 @Composable
 fun TabScreen(viewModel: HomeScreenViewModel) {
@@ -63,13 +65,13 @@ fun ArticleItem(item: Article, onArticleClick: (Article) -> Unit) {
             .clickable {
                 onArticleClick.invoke(item)
             },
-        shape = MaterialTheme.shapes.medium,
+        shape = JetPackNewsTheme.shapes.medium,
         elevation = 6.dp
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Color.White)
+                .background(color = JetPackNewsTheme.colors.cardBackground)
                 .wrapContentHeight()
                 .padding(8.dp),
             horizontalArrangement = Arrangement.Start,
@@ -84,20 +86,20 @@ fun ArticleItem(item: Article, onArticleClick: (Article) -> Unit) {
             ) {
                 Text(
                     text = item.title,
-                    color = Color.Black,
+                    color = JetPackNewsTheme.colors.text,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.button
+                    style = JetPackNewsTheme.typography.title
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = item.description,
-                    color = Color.Black,
+                    color = JetPackNewsTheme.colors.text,
                     maxLines = 4,
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.caption
+                    style = JetPackNewsTheme.typography.subTitle
                 )
             }
         }
@@ -110,7 +112,7 @@ private fun RemoteImage(imageUrl: String) {
         AsyncImage(
             modifier = Modifier
                 .size(104.dp)
-                .clip(RoundedCornerShape(32.dp)),
+                .clip(JetPackNewsTheme.shapes.iconShape),
             model = ImageRequest.Builder(LocalContext.current)
                 .data(imageUrl)
                 .build(),
@@ -123,7 +125,7 @@ private fun RemoteImage(imageUrl: String) {
 
 @Composable
 private fun FullScreenProgressBar() {
-    Surface(color = Color.LightGray) {
+    Surface(color = JetPackNewsTheme.colors.progressBackground) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
