@@ -63,7 +63,7 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     private fun fetchArticles(query: String) {
-        viewModelScope.launch(dispatcherProvider.main) {
+        viewModelScope.launch(dispatcherProvider.io) {
             getArticlesUseCase.invoke(query).fold(onSuccess = {
                 sendEvent(HomeScreenUiEvent.ShowData(items = it.articles))
             }, onFailure = {
