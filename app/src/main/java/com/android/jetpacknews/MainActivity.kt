@@ -84,8 +84,8 @@ class MainActivity : ComponentActivity() {
                     "?${BundleKeys.TITLE}={${BundleKeys.TITLE}}&" +
                             "${BundleKeys.DESCRIPTION}={${BundleKeys.DESCRIPTION}}&" +
                             "${BundleKeys.IMAGE_URL}={${BundleKeys.IMAGE_URL}}&" +
-                            "${BundleKeys.IMAGE_URL}={${BundleKeys.AUTHOR}}&" +
-                            "${BundleKeys.IMAGE_URL}={${BundleKeys.PUBLISHED_AT}}"
+                            "${BundleKeys.AUTHOR}={${BundleKeys.AUTHOR}}&" +
+                            "${BundleKeys.PUBLISHED_AT}={${BundleKeys.PUBLISHED_AT}}"
                 ),
                 arguments = listOf(
                     navArgument(BundleKeys.TITLE) {
