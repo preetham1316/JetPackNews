@@ -32,17 +32,21 @@ fun TabScreen(viewModel: HomeScreenViewModel) {
     Column {
         when {
             state.isLoading -> FullScreenProgressBar()
-            state.articleList.isNotEmpty() -> ArticleList(state.articleList)
+            state.articleList.isNotEmpty() -> ArticleList(state.articleList) { article ->
+                viewModel.navigateToDetail(
+                    article
+                )
+            }
         }
     }
 }
 
 @Composable
-fun ArticleList(articleList: List<Article>) {
+fun ArticleList(articleList: List<Article>, onArticleClick: (Article) -> Unit) {
     Box {
         LazyColumn(content = {
             items(articleList) { item ->
-                ArticleItem(item)
+                ArticleItem(item, onArticleClick)
             }
         })
 
@@ -50,13 +54,14 @@ fun ArticleList(articleList: List<Article>) {
 }
 
 @Composable
-fun ArticleItem(item: Article) {
+fun ArticleItem(item: Article, onArticleClick: (Article) -> Unit) {
     Card(
         modifier = Modifier
             .padding(start = 8.dp, top = 8.dp, end = 8.dp)
             .fillMaxWidth()
             .wrapContentHeight()
-            .clickable {// T0D0 handle click
+            .clickable {
+                onArticleClick.invoke(item)
             },
         shape = MaterialTheme.shapes.medium,
         elevation = 6.dp
@@ -87,7 +92,7 @@ fun ArticleItem(item: Article) {
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = item.content,
+                    text = item.description,
                     color = Color.Black,
                     maxLines = 4,
                     overflow = TextOverflow.Ellipsis,

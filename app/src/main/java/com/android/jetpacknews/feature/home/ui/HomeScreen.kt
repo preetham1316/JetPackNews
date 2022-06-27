@@ -65,8 +65,7 @@ fun HomeScreen() {
                 // Ref: https://google.github.io/accompanist/pager/#reacting-to-page-changes
                 LaunchedEffect(pagerState) {
                     snapshotFlow { pagerState.currentPage }.collect { page ->
-                        viewModel.updateQuery(tabData[page])
-                        viewModel.loadData()
+                        viewModel.loadData(tabData[page])
                     }
                 }
                 Column(
