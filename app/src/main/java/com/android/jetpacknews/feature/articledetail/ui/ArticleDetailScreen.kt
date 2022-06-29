@@ -4,7 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -25,7 +28,11 @@ import com.android.jetpacknews.util.parseDate
 
 @Composable
 fun ArticleDetailScreen(viewModel: ArticleDetailViewModel) {
-    Column(modifier = Modifier.fillMaxSize().background(JetPackNewsTheme.colors.background)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(JetPackNewsTheme.colors.background)
+    ) {
         AppBar {
             viewModel.onBackClicked()
         }

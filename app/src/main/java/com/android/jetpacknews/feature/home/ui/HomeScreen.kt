@@ -1,22 +1,23 @@
 package com.android.jetpacknews.feature.home.ui
 
+import android.annotation.SuppressLint
+import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.material.ScrollableTabRow
-import androidx.compose.material.Tab
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.snapshotFlow
+import androidx.compose.material.*
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import com.android.jetpacknews.R
 import com.android.jetpacknews.feature.home.presentation.viewmodel.HomeScreenViewModel
 import com.android.jetpacknews.ui.theme.JetPackNewsTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -24,18 +25,20 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
+
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(homeScreenViewModel: HomeScreenViewModel) {
     val tabData = listOf("Technology", "Movies", "Food", "Politics", "Education")
     val pagerState = rememberPagerState(
         initialPage = 0,
     )
     val tabIndex = pagerState.currentPage
     val coroutineScope = rememberCoroutineScope()
-    Column {
-        AppBar()
-        Column {
+    Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
+        AppBar { homeScreenViewModel.onSearchClicked() }
+    }) {
+        Column(modifier = Modifier.padding(it)) {
             ScrollableTabRow(
                 modifier = Modifier.fillMaxWidth(),
                 selectedTabIndex = tabIndex,
@@ -61,12 +64,11 @@ fun HomeScreen() {
                 count = tabData.size,
                 state = pagerState
             ) {
-                val viewModel: HomeScreenViewModel = hiltViewModel()
                 // Added to get the exact clicked tab data else all the tabs will be notified
                 // Ref: https://google.github.io/accompanist/pager/#reacting-to-page-changes
                 LaunchedEffect(pagerState) {
                     snapshotFlow { pagerState.currentPage }.collect { page ->
-                        viewModel.loadData(tabData[page])
+                        homeScreenViewModel.loadData(tabData[page])
                     }
                 }
                 Column(
@@ -76,7 +78,7 @@ fun HomeScreen() {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    TabScreen(viewModel)
+                    TabScreen(homeScreenViewModel)
                 }
             }
         }
@@ -84,27 +86,56 @@ fun HomeScreen() {
 }
 
 @Composable
-private fun AppBar() {
-    TopAppBar(
+private fun AppBar(onSearchClicked: () -> Unit) {
+    val context = LocalContext.current
+    CenterAlignedTopAppBar(
         modifier = Modifier
             .fillMaxWidth()
-            .height(60.dp),
-        backgroundColor = JetPackNewsTheme.colors.primary,
-        elevation = 8.dp,
-        content = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "Jet Pack News",
-                    color = Color.White,
-                    textAlign = TextAlign.Center,
-                    style = typography.h6
+            .background(JetPackNewsTheme.colors.primary),
+        colors = TopBarColors(),
+        title = {
+            Text(
+                text = stringResource(R.string.app_title),
+                color = Color.White,
+                textAlign = TextAlign.Center,
+                style = JetPackNewsTheme.typography.title3
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = {
+                Toast.makeText(context, "Coming Soon!", Toast.LENGTH_SHORT).show()
+            }) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_menu),
+                    contentDescription = "Localized description"
+                )
+            }
+        }, actions = {
+            IconButton(onClick = onSearchClicked) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_search),
+                    contentDescription = "Localized description"
                 )
             }
         }
     )
+}
+
+@SuppressLint("UnrememberedMutableState")
+class TopBarColors : TopAppBarColors {
+
+    @Composable
+    override fun actionIconContentColor(scrollFraction: Float) =
+        mutableStateOf(Color.White)
+
+    @Composable
+    override fun containerColor(scrollFraction: Float) =
+        mutableStateOf(JetPackNewsTheme.colors.primary)
+
+    @Composable
+    override fun navigationIconContentColor(scrollFraction: Float) =
+        mutableStateOf(Color.White)
+
+    @Composable
+    override fun titleContentColor(scrollFraction: Float) = mutableStateOf(Color.White)
 }

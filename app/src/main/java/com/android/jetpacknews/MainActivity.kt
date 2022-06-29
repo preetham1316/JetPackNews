@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
                 SplashScreen(hiltViewModel())
             }
             composable(Screen.Home().route) {
-                HomeScreen()
+                HomeScreen(hiltViewModel())
             }
             // T0D0 Not to pass long list of arguments, pass via parcelable
             // Or just pass ID and fetch details in next screen
