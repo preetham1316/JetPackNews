@@ -7,5 +7,5 @@ Also used latest libraries i.e
 4) Navigation
 5) Pager
 
-<img width="332" alt="jetPack_news_app" src="https://user-images.githubusercontent.com/107846675/175053031-068e759c-a63f-4986-9e9b-da227fe15bdf.png">
+<img width="256" alt="jetpack_news_demo" src="https://user-images.githubusercontent.com/107846675/176409565-300b2452-9c58-4268-ab09-c2abbff56d28.png">
 
