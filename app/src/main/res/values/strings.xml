@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">JetPackNews</string>
     <string name="app_title">Jet Pack News</string>
+    <string name="search_hint">Search to get news for any topic</string>
 </resources>
