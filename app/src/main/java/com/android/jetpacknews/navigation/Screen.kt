@@ -6,4 +6,5 @@ sealed class Screen(open val route: String) {
     data class Splash(override val route: String = "splash") : Screen(route)
     data class Home(override val route: String = "home") : Screen(route)
     data class ArticleDetail(override val route: String = "article_detail") : Screen(route)
+    data class Search(override val route: String = "search") : Screen(route)
 }

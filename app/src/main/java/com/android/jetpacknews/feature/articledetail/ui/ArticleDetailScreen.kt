@@ -4,7 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -20,12 +23,17 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.android.jetpacknews.R
 import com.android.jetpacknews.feature.articledetail.presentation.viewmodel.ArticleDetailViewModel
+import com.android.jetpacknews.ui.composition.AppBar
 import com.android.jetpacknews.ui.theme.JetPackNewsTheme
 import com.android.jetpacknews.util.parseDate
 
 @Composable
 fun ArticleDetailScreen(viewModel: ArticleDetailViewModel) {
-    Column(modifier = Modifier.fillMaxSize().background(JetPackNewsTheme.colors.background)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(JetPackNewsTheme.colors.background)
+    ) {
         AppBar {
             viewModel.onBackClicked()
         }
@@ -88,36 +96,4 @@ fun DetailScreenBody(viewModel: ArticleDetailViewModel) {
             style = JetPackNewsTheme.typography.title2
         )
     }
-}
-
-@Composable
-private fun AppBar(onBackPressed: () -> Unit) {
-    TopAppBar(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(60.dp),
-        backgroundColor = Color.Transparent,
-        elevation = 0.dp,
-        content = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start
-            ) {
-                Spacer(modifier = Modifier.width(5.dp))
-                IconButton(
-                    onClick = { onBackPressed() },
-                    modifier = Modifier
-                        .size(32.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_back_arrow),
-                        contentDescription = "Back",
-                        tint = Color.Unspecified
-                    )
-                }
-            }
-        }
-    )
 }

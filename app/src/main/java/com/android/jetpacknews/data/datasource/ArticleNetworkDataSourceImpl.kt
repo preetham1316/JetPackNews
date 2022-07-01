@@ -12,4 +12,8 @@ class ArticleNetworkDataSourceImpl @Inject constructor(private val newsApi: News
     override suspend fun getArticles(query: String): Result<ArticleResponseDto> {
         return safeApiCall({ newsApi.getArticles(query = query) }, { Exception(it) })
     }
+
+    override suspend fun searchArticles(query: String): Result<ArticleResponseDto> {
+        return safeApiCall({ newsApi.searchArticles(query = query) }, { Exception(it) })
+    }
 }

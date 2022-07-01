@@ -21,7 +21,7 @@ import androidx.navigation.navArgument
 import com.android.jetpacknews.feature.articledetail.presentation.viewmodel.ArticleDetailViewModel
 import com.android.jetpacknews.feature.articledetail.ui.ArticleDetailScreen
 import com.android.jetpacknews.feature.home.ui.HomeScreen
-import com.android.jetpacknews.feature.splash.presentation.viewmodel.SplashViewModel
+import com.android.jetpacknews.feature.search.ui.SearchScreen
 import com.android.jetpacknews.feature.splash.ui.SplashScreen
 import com.android.jetpacknews.navigation.Screen
 import com.android.jetpacknews.navigation.ScreenNavigator
@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
                 SplashScreen(hiltViewModel())
             }
             composable(Screen.Home().route) {
-                HomeScreen()
+                HomeScreen(hiltViewModel())
             }
             // T0D0 Not to pass long list of arguments, pass via parcelable
             // Or just pass ID and fetch details in next screen
@@ -118,6 +118,9 @@ class MainActivity : ComponentActivity() {
                     }
                     ArticleDetailScreen(hiltViewModel())
                 }
+            }
+            composable(Screen.Search().route) {
+                SearchScreen(hiltViewModel())
             }
         }
     }

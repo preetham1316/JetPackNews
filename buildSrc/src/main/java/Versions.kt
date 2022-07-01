@@ -17,4 +17,5 @@ object Versions {
 
     const val PAGER = "0.23.1"
 
+    const val COMPOSE_MATERIAL3 = "1.0.0-alpha13"
 }

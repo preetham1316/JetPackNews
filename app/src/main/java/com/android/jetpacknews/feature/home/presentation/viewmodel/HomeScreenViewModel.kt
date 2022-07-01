@@ -89,4 +89,9 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
+    fun onSearchClicked() {
+        viewModelScope.launch(dispatcherProvider.main) {
+            screenNavigator.navigate(ScreenAction.goTo(Screen.Search()))
+        }
+    }
 }

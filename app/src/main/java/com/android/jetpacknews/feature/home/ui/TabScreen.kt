@@ -5,33 +5,26 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.android.jetpacknews.R
 import com.android.jetpacknews.domain.model.Article
 import com.android.jetpacknews.feature.home.presentation.viewmodel.HomeScreenViewModel
-import com.android.jetpacknews.ui.theme.JetPackNewsColors
+import com.android.jetpacknews.ui.composition.FullScreenProgressBar
+import com.android.jetpacknews.ui.composition.NoSearchResult
 import com.android.jetpacknews.ui.theme.JetPackNewsTheme
 
 @Composable
 fun TabScreen(viewModel: HomeScreenViewModel) {
     val state by viewModel.state.collectAsState()
-    Column {
+    Box {
         when {
             state.isLoading -> FullScreenProgressBar()
             state.articleList.isNotEmpty() -> ArticleList(state.articleList) { article ->
@@ -39,19 +32,19 @@ fun TabScreen(viewModel: HomeScreenViewModel) {
                     article
                 )
             }
+            state.articleList.isEmpty() -> NoSearchResult(topPadding = 100.dp)
         }
     }
 }
 
 @Composable
 fun ArticleList(articleList: List<Article>, onArticleClick: (Article) -> Unit) {
-    Box {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         LazyColumn(content = {
             items(articleList) { item ->
                 ArticleItem(item, onArticleClick)
             }
         })
-
     }
 }
 
@@ -102,35 +95,6 @@ fun ArticleItem(item: Article, onArticleClick: (Article) -> Unit) {
                     style = JetPackNewsTheme.typography.subTitle
                 )
             }
-        }
-    }
-}
-
-@Composable
-private fun RemoteImage(imageUrl: String) {
-    BoxWithConstraints {
-        AsyncImage(
-            modifier = Modifier
-                .size(104.dp)
-                .clip(JetPackNewsTheme.shapes.iconShape),
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(imageUrl)
-                .build(),
-            placeholder = painterResource(R.drawable.ic_image_placeholder),
-            contentDescription = "Image",
-            contentScale = ContentScale.FillBounds
-        )
-    }
-}
-
-@Composable
-private fun FullScreenProgressBar() {
-    Surface(color = JetPackNewsTheme.colors.progressBackground) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
         }
     }
 }
