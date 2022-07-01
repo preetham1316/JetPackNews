@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.android.jetpacknews.R
+import com.android.jetpacknews.ui.theme.JetPackNewsTheme
 
 @Composable
 fun AppBar(onBackPressed: () -> Unit) {
@@ -18,7 +19,7 @@ fun AppBar(onBackPressed: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp),
-        backgroundColor = Color.Transparent,
+        backgroundColor = JetPackNewsTheme.colors.background,
         elevation = 0.dp,
         content = {
             Row(

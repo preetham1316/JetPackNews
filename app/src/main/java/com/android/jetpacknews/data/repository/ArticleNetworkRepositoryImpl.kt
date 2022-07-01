@@ -18,4 +18,10 @@ class ArticleNetworkRepositoryImpl @Inject constructor(
             articleNetworkDataSource.getArticles(query).map { articleResponseDtoMapper.map(it) }
         }
     }
+
+    override suspend fun searchArticles(query: String): Result<ArticleResponse> {
+        return withContext(dispatcherProvider.io) {
+            articleNetworkDataSource.searchArticles(query).map { articleResponseDtoMapper.map(it) }
+        }
+    }
 }

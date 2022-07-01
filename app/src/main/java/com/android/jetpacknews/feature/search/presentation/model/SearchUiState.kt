@@ -5,6 +5,7 @@ import com.android.jetpacknews.domain.model.Article
 
 data class SearchUiState(
     val query: String = "",
+    val isLoading: Boolean = false,
     val items: List<Article> = emptyList()
 ) : UiState {
     companion object {
