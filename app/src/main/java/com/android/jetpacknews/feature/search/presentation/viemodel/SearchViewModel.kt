@@ -47,8 +47,8 @@ class SearchViewModel @Inject constructor(
     }
 
     fun onSearchInputChanged(query: String) {
-        sendEvent(SearchUiEvent.UpdateQuery(query = query))
         queryFlow.update { query }
+        sendEvent(SearchUiEvent.ShowProgressBar)
     }
 
     private fun sendEvent(event: SearchUiEvent) {
@@ -66,7 +66,6 @@ class SearchViewModel @Inject constructor(
 
     private fun search(query: String) {
         viewModelScope.launch(dispatcherProvider.io) {
-            sendEvent(SearchUiEvent.ShowProgressBar)
             searchArticlesUseCase.invoke(query).fold(onSuccess = {
                 sendEvent(SearchUiEvent.ShowData(articles = it.articles))
             }, onFailure = {
@@ -100,16 +99,17 @@ class SearchViewModel @Inject constructor(
         Reducer<SearchUiState, SearchUiEvent>(initial) {
         override fun reduce(oldState: SearchUiState, event: SearchUiEvent) {
             when (event) {
-                is SearchUiEvent.UpdateQuery -> setState(oldState.copy(query = event.query))
                 is SearchUiEvent.ShowProgressBar -> setState(oldState.copy(isLoading = true))
                 is SearchUiEvent.ShowData -> setState(
                     SearchUiState(
-                        query = oldState.query,
                         isLoading = false,
                         items = event.articles
                     )
                 )
-                is SearchUiEvent.ClearSearchResults -> setState(SearchUiState())
+                is SearchUiEvent.ClearSearchResults -> {
+                    queryFlow.update { String.EMPTY }
+                    setState(SearchUiState())
+                }
             }
         }
     }

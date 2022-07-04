@@ -31,23 +31,24 @@ fun SearchScreen(searchViewModel: SearchViewModel) {
                 .padding(it)
         ) {
             val state by searchViewModel.state.collectAsState()
-            SearchTopSection(state,
+            val query by searchViewModel.queryFlow.collectAsState()
+            SearchTopSection(query,
                 onSearchInputChanged = { text ->
                     searchViewModel.onSearchInputChanged(text)
-                }, onArticleClick = { article ->
-                    searchViewModel.navigateToDetail(article)
                 },
-                onClearSearchClick = {searchViewModel.clearSearchResults()})
+                onClearSearchClick = { searchViewModel.clearSearchResults() }
+            )
+            SearchResult(state, query.isNotEmpty()) { article ->
+                searchViewModel.navigateToDetail(article)
+            }
         }
-
     }
 }
 
 @Composable
 private fun SearchTopSection(
-    state: SearchUiState,
+    query: String,
     onSearchInputChanged: (String) -> Unit,
-    onArticleClick: (Article) -> Unit,
     onClearSearchClick: () -> Unit
 ) {
     Spacer(modifier = Modifier.height(10.dp))
@@ -55,21 +56,22 @@ private fun SearchTopSection(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 10.dp, end = 10.dp),
-        searchInput = state.query,
+        searchInput = query,
         onSearchInputChanged = onSearchInputChanged,
         onClearSearchClick = onClearSearchClick
     )
     Spacer(modifier = Modifier.height(10.dp))
-    SearchResult(state, onArticleClick)
 }
 
 @Composable
-fun SearchResult(state: SearchUiState, onArticleClick: (Article) -> Unit) {
+fun SearchResult(state: SearchUiState, hasSearchQuery: Boolean, onArticleClick: (Article) -> Unit) {
     Box {
         when {
             state.isLoading -> FullScreenProgressBar()
             state.items.isNotEmpty() -> ArticleList(state.items, onArticleClick)
-            state.items.isEmpty() && state.query.isNotEmpty() && !state.isLoading -> NoSearchResult(topPadding = 100.dp)
+            state.items.isEmpty() && hasSearchQuery && !state.isLoading -> NoSearchResult(
+                topPadding = 100.dp
+            )
             else -> Box(modifier = Modifier.fillMaxSize()) // To clear results and show empty view
         }
     }
